@@ -1,10 +1,10 @@
 <?php
    error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
    session_start();
-  // include 'dbconnector.php';
-  $showAlert = false;
-  $con = mysqli_connect('localhost','root');
-  mysqli_select_db($con,'discussion_forum');
+    // include 'dbconnector.php';
+    $showAlert = false;
+    $con = mysqli_connect('localhost','root');
+    mysqli_select_db($con,'discussion_forum');
   
     $username = $_POST['username'];
     $pass = $_POST['pass'];
