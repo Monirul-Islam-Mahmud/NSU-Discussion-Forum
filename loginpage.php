@@ -12,6 +12,15 @@ if (isset($_POST['submit'])){
   $query = mysqli_query($con, $s);
   $num = mysqli_num_rows($query);
 
+  //Fetching the data from the database
+  $row = mysqli_fetch_assoc($query);
+  $_SESSION['username'] = $row['username'];
+  $_SESSION['email'] = $row['email'];
+  $_SESSION['id'] = $row['id'];
+  $_SESSION['type'] = $row['type'];
+
+  
+
   if($num){
     $_SESSION['username'] = $username;
     ?>

@@ -1,7 +1,20 @@
 <?php
-  include 'dbconnector.php';
-  session_start();
+
+    include 'dbconnector.php';
+    session_start();
+    error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+    $nsu_id = $_SESSION['nsu_id'];
+    $username = $_SESSION['username'];
+    $email = $_SESSION['email'];
+    $id = $_SESSION['id'];
+    $pass = $_SESSION['pass'];
+    $selectQuery = "SELECT * FROM users where id = $_SESSION[id]";
+    $result = mysqli_query($conn, $selectQuery);
+    $row = mysqli_fetch_assoc($result);
+    
+    
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +31,8 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
-    ></script>
+    >
+  </script>
 
     <title>Profile</title>
 
@@ -83,25 +97,28 @@
       />
 
       <div class="heading2">
-        <b>Name:</b> &nbsp; Monirul Islam Mahmud
+        <b>Name:</b> &nbsp; <?php echo $row['username']; ?>
 
         <br /><br />
 
-        <b>Username:</b> &nbsp; Mahmud
+        
+        <b>NSU Id:</b> &nbsp; <?php echo $row['nsu_id']; ?>
+        <br><br>
+
+        <b>Email:</b> &nbsp; <?php echo $row['email']; ?>
 
         <br /><br />
 
-        <b>Email:</b> &nbsp; monirul.mahmud@northsouth.edu
-
-        <br /><br />
-
-        <b>Type:</b> &nbsp; Student
+        <b>Type:</b> &nbsp; <?php echo $row['type']; ?><br><br>
+        <b>Password: </b> &nbsp; <?php echo $row['pass']; ?>
       </div>
     </div>
+
+
     <br/><br/>
     <hr/>
 
-    <div class="mt-3"
+    <div class="mt-3 mb-5"
       style="color: rgb(199, 22, 51); text-align: center; font-weight: bold"
     >
       Developed & Maintained By Office of IT, NSU
