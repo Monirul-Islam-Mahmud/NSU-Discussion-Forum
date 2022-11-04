@@ -1,4 +1,9 @@
+<?php
+  include 'dbconnector.php';
+  session_start();
 
+  $msg = "";
+?>
 
 
 <!DOCTYPE html>
@@ -88,7 +93,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-12">
           <div class="reset-pass-div">
             <h4 class="res-pass">Sign up</h4> <hr>
-
+            <?php  echo $msg; ?>
             <!-- <?php
               if($showAlert){
               echo ' <div class="alert alert-success alert-dismissible fade show" role="alert">
