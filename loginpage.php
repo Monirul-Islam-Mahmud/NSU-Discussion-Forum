@@ -8,7 +8,12 @@ mysqli_select_db ($con,'discussion_forum');
 if (isset($_POST['submit'])){
   $username = $_POST['username'];
   $pass = $_POST['pass'];
-  $s = "SELECT * from users where username='$username' && pass='$pass'";
+
+  //******* SQL Injection Prevention **********
+  $sanitized_userid = mysqli_real_escape_string($con, $username);
+  $sanitized_password = mysqli_real_escape_string($con, $pass);
+
+  $s = "SELECT * from users where username='". $sanitized_userid . "' && pass='". $sanitized_password . "'";
   $query = mysqli_query($con, $s);
   $num = mysqli_num_rows($query);
 
@@ -25,8 +30,8 @@ if (isset($_POST['submit'])){
     $_SESSION['username'] = $username;
     $_SESSION['pass'] = $pass;
     if (isset($_POST['remember'])) {
-      setcookie('username', $username, time() + (60 * 60 * 7));
-      setcookie('pass', $pass, time() + (60 * 60 * 7));
+      setcookie('username', $username, time() +3600);
+      setcookie('pass', $pass, time() +3600);
      }
     
     ?>
@@ -35,14 +40,13 @@ if (isset($_POST['submit'])){
       window.location.href = "home.php";
     </script>
 
-<?php
-    
-  }else{
-    $_SESSION['status'] = "Wrong Password!";
-    header('location:loginpage.php');
-    
+  <?php
+      
+    }else{
+      $_SESSION['status'] = "Wrong Password!";
+      header('location:loginpage.php');
+    }
   }
-}
 
 ?>
 
@@ -121,9 +125,7 @@ if (isset($_POST['submit'])){
             alt="logo"
           />
           <small class="brand-name">North South University ||</small>
-          <small class="brand-name"
-            >Center of Excellence in Higher Education</small
-          >
+          <small class="brand-name">Center of Excellence in Higher Education</small>
         </a>
       </div>
     </nav>
@@ -155,7 +157,6 @@ if (isset($_POST['submit'])){
               <?php
                   unset($_SESSION['status']);
                 }
-              
             ?>
 
 
@@ -178,15 +179,13 @@ if (isset($_POST['submit'])){
               <br/>
               <input type="checkbox" id="check_box" value="1" name="remember">
               <label id="small">Remember me</label> <br>
-
             <button type="submit" name="submit" class="btn btn-danger btn-block"> Sign in </button>
           </form>
 
           <hr>
-            <span
-              >Don't have an account?
-              <a class="denger" href="index.php">Register Here</a></span
-            ><br />
+            <span>Don't have an account?
+              <a class="denger" href="index.php">Register Here</a>
+            </span><br/>
           </div>
         </div>
       </div>
